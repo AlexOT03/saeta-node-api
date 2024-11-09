@@ -35,16 +35,91 @@ app.get('/api/route/:id', (req, res) => {
     res.send(route);
 });
 
-app.get('/api/route/:id/going', (req, res) => {
+app.get('/api/route/:routeId/goings', (req, res) => {
     const data = readData();
-    const route = data.routes.find(route => route.id === parseInt(req.params.id));
+    const route = data.routes.find(route => route.id === parseInt(req.params.routeId));
+    if (!route) return res.status(404).send('Route not found');
     res.send(route.Going);
 });
 
-app.get('/api/route/:id/return', (req, res) => {
+app.get('/api/route/:routeId/going/:goingId', (req, res) => {
     const data = readData();
-    const route = data.routes.find(route => route.id === parseInt(req.params.id));
+    const route = data.routes.find(route => route.id === parseInt(req.params.routeId));
+    if (!route) return res.status(404).send('Route not found');
+
+    const going = route.Going.find(going => going.id === parseInt(req.params.goingId));
+    if (!going) return res.status(404).send('Going not found');
+
+    res.send(going);
+});
+
+app.get('/api/route/:routeId/going/:goingId/stops', (req, res) => {
+    const data = readData();
+    const route = data.routes.find(route => route.id === parseInt(req.params.routeId));
+    if (!route) return res.status(404).send('Route not found');
+
+    const going = route.Going.find(going => going.id === parseInt(req.params.goingId));
+    if (!going) return res.status(404).send('Going not found');
+
+    res.send(going.stops);
+});
+
+app.get('/api/route/:routeId/going/:goingId/stop/:stopId', (req, res) => {
+    const data = readData();
+    const route = data.routes.find(route => route.id === parseInt(req.params.routeId));
+    if (!route) return res.status(404).send('Route not found');
+
+    const going = route.Going.find(going => going.id === parseInt(req.params.goingId));
+    if (!going) return res.status(404).send('Going not found');
+
+    const stop = going.stops.find(stop => stop.id === parseInt(req.params.stopId));
+    if (!stop) return res.status(404).send('Stop not found');
+
+    res.send(stop);
+});
+
+
+app.get('/api/route/:routeId/returns', (req, res) => {
+    const data = readData();
+    const route = data.routes.find(route => route.id === parseInt(req.params.routeId));
+    if (!route) return res.status(404).send('Route not found');
     res.send(route.Return);
+});
+
+app.get('/api/route/:routeId/return/:returnId', (req, res) => {
+    const data = readData();
+    const route = data.routes.find(route => route.id === parseInt(req.params.routeId));
+    if (!route) return res.status(404).send('Route not found');
+
+    const returnRoute = route.Return.find(returnRoute => returnRoute.id === parseInt(req.params.returnId));
+    if (!returnRoute) return res.status(404).send('Return route not found');
+
+    res.send(returnRoute);
+});
+
+app.get('/api/route/:routeId/return/:returnId/stops', (req, res) => {
+    const data = readData();
+    const route = data.routes.find(route => route.id === parseInt(req.params.routeId));
+    if (!route) return res.status(404).send('Route not found');
+
+    const returnRoute = route.Return.find(returnRoute => returnRoute.id === parseInt(req.params.returnId));
+    if (!returnRoute) return res.status(404).send('Return route not found');
+
+    res.send(returnRoute.stops);
+});
+
+app.get('/api/route/:routeId/return/:returnId/stop/:stopId', (req, res) => {
+    const data = readData();
+    const route = data.routes.find(route => route.id === parseInt(req.params.routeId));
+    if (!route) return res.status(404).send('Route not found');
+
+    const returnRoute = route.Return.find(returnRoute => returnRoute.id === parseInt(req.params.returnId));
+    if (!returnRoute) return res.status(404).send('Return route not found');
+
+    const stop = returnRoute.stops.find(stop => stop.id === parseInt(req.params.stopId));
+    if (!stop) return res.status(404).send('Stop not found');
+
+    res.send(stop);
 });
 
 app.post('/api/route', (req, res) => {
