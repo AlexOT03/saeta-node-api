@@ -1,0 +1,23 @@
+{
+  "name": "saeta-node-api",
+  "version": "1.0.0",
+  "description": "API que ofrece un acceso centralizado y eficiente a datos detallados sobre las rutas del transporte publico de Villahermosa Tabasco.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "node",
+    "js"
+  ],
+  "author": "fallengod",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
