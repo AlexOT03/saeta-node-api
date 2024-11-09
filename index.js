@@ -1,7 +1,14 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
 import express from 'express';
 import fs from 'fs';
 
-const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
+const app = express(); 
+const PORT = process.env.PORT || 3000
 
 const readData = () => {
     try {
@@ -19,9 +26,11 @@ const withData = (data) => {
         console.log(error);
     }
 };
+
+app.use(express.static(path.join(__dirname, 'public')));
  
 app.get('/', (req, res) => {
-    res.send('Hola mundo esto es mi primer proyecto en Node.js');
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.get('/api/routes', (req, res) => {
@@ -155,6 +164,6 @@ app.delete('/api/route/:id', (req, res) => {
     res.JSON({message: 'Route deleted'});
 });
 
-app.listen(3000, () => {
-    console.log('Servidor corriendo en http://localhost:3000');
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });

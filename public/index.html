@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAETA | Node.js API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .route-list, .example {
+            list-style-type: none;
+            padding: 0;
+        }
+        .route-list li, .example-item {
+            background: #eaeaea;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .route-url, .example-url {
+            font-weight: bold;
+        }
+        .description {
+            color: #666;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .github-link {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .github-link a {
+            color: #61dafb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .github-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Bienvenido a SAETA API</h1>
+    <p>Esta API permite acceder a datos de rutas de Villahermosa Tabasco, incluyendo sus detalles de ida, regreso y paradas.</p>
+
+    <h2>Endpoints de la API</h2>
+    <ul class="route-list">
+        <li>
+            <span class="route-url">GET /api/route/:routeId/goings</span><br>
+            <span class="description">Obtiene todas las idas de una ruta específica.</span>
+        </li>
+        <li>
+            <span class="route-url">GET /api/route/:routeId/going/:goingId</span><br>
+            <span class="description">Obtiene los detalles de una ida específica dentro de una ruta.</span>
+        </li>
+        <li>
+            <span class="route-url">GET /api/route/:routeId/going/:goingId/stops</span><br>
+            <span class="description">Obtiene todas las paradas de una ida específica dentro de una ruta.</span>
+        </li>
+        <li>
+            <span class="route-url">GET /api/route/:routeId/going/:goingId/stop/:stopId</span><br>
+            <span class="description">Obtiene los detalles de una parada específica dentro de una ida.</span>
+        </li>
+        <li>
+            <span class="route-url">GET /api/route/:routeId/returns</span><br>
+            <span class="description">Obtiene todas las rutas de regreso de una ruta específica.</span>
+        </li>
+        <li>
+            <span class="route-url">GET /api/route/:routeId/return/:returnId</span><br>
+            <span class="description">Obtiene los detalles de un regreso específico dentro de una ruta.</span>
+        </li>
+        <li>
+            <span class="route-url">GET /api/route/:routeId/return/:returnId/stops</span><br>
+            <span class="description">Obtiene todas las paradas de un regreso específico dentro de una ruta.</span>
+        </li>
+        <li>
+            <span class="route-url">GET /api/route/:routeId/return/:returnId/stop/:stopId</span><br>
+            <span class="description">Obtiene los detalles de una parada específica dentro de un regreso.</span>
+        </li>
+    </ul>
+
+    <p>Reemplaza <code>:routeId</code>, <code>:goingId</code>, <code>:returnId</code>, y <code>:stopId</code> con los identificadores apropiados para realizar las consultas correspondientes.</p>
+
+    <h2>Ejemplo de uso</h2>
+    <div class="example">
+        <div class="example-item">
+            <span class="example-url">GET /api/route/1/goings</span><br>
+            <span class="description">Obtiene todas las idas de la ruta con ID 1.</span>
+            <h3>Solicitud</h3>
+            <pre>
+curl -X GET http://localhost:3000/api/route/1/goings
+            </pre>
+            <h3>Respuesta</h3>
+            <pre>
+[
+    {
+        "id": 101,
+        "name": "Going 1",
+        "stops": [
+            { "id": 1001, "name": "Stop A" },
+            { "id": 1002, "name": "Stop B" }
+        ]
+    },
+    {
+        "id": 102,
+        "name": "Going 2",
+        "stops": [
+            { "id": 1003, "name": "Stop C" },
+            { "id": 1004, "name": "Stop D" }
+        ]
+    }
+]
+            </pre>
+        </div>
+
+        <div class="example-item">
+            <span class="example-url">GET /api/route/1/return/201</span><br>
+            <span class="description">Obtiene los detalles del regreso con ID 201 en la ruta con ID 1.</span>
+            <h3>Solicitud</h3>
+            <pre>
+curl -X GET http://localhost:3000/api/route/1/return/201
+            </pre>
+            <h3>Respuesta</h3>
+            <pre>
+{
+    "id": 201,
+    "name": "Return 1",
+    "stops": [
+        { "id": 2001, "name": "Stop X" },
+        { "id": 2002, "name": "Stop Y" }
+    ]
+}
+            </pre>
+        </div>
+    </div>
+
+    <div class="github-link">
+        <p>Encuentra el código fuente de este proyecto en nuestro repositorio de GitHub:</p>
+        <a href="https://github.com/AlexOT03/saeta-node-api" target="_blank">Visitar el repositorio en GitHub</a>
+    </div>
+</body>
+</html>
