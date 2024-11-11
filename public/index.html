@@ -104,25 +104,39 @@
             <span class="description">Obtiene todas las idas de la ruta con ID 1.</span>
             <h3>Solicitud</h3>
             <pre>
-curl -X GET http://localhost:3000/api/route/1/goings
+curl -X GET https://saeta-node-api.onrender.com/api/route/1/goings
             </pre>
             <h3>Respuesta</h3>
             <pre>
 [
     {
         "id": 101,
-        "name": "Going 1",
+        "address": "Going 1",
         "stops": [
-            { "id": 1001, "name": "Stop A" },
-            { "id": 1002, "name": "Stop B" }
+            { 
+                "id": 1,
+                "name": "Name",
+                "road": "Road Name",
+                "logo": "logo.png",
+                "is_terminal": true,
+                "altitude": 1987088.24,
+                "latitude": 500688.9383
+            }
         ]
     },
     {
         "id": 102,
-        "name": "Going 2",
+        "address": "Going 2",
         "stops": [
-            { "id": 1003, "name": "Stop C" },
-            { "id": 1004, "name": "Stop D" }
+            {
+                "id": 2,
+                "name": "Name",
+                "road": "Road Name",
+                "logo": "logo.png",
+                "is_terminal": false,
+                "altitude": 1987628.859,
+                "latitude": 501533.2386
+            },
         ]
     }
 ]
@@ -134,16 +148,23 @@ curl -X GET http://localhost:3000/api/route/1/goings
             <span class="description">Obtiene los detalles del regreso con ID 201 en la ruta con ID 1.</span>
             <h3>Solicitud</h3>
             <pre>
-curl -X GET http://localhost:3000/api/route/1/return/201
+curl -X GET https://saeta-node-api.onrender.com/api/route/1/return/201
             </pre>
             <h3>Respuesta</h3>
             <pre>
 {
     "id": 201,
-    "name": "Return 1",
+    "address": "Return 1",
     "stops": [
-        { "id": 2001, "name": "Stop X" },
-        { "id": 2002, "name": "Stop Y" }
+        {
+            "id": 2,
+            "name": "Name",
+            "road": "Road Name",
+            "logo": "logo.png",
+            "is_terminal": false,
+            "altitude": 1990040.361,
+            "latitude": 508881.8151
+        }
     ]
 }
             </pre>

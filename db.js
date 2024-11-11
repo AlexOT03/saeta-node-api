@@ -2323,7 +2323,7 @@
             "route_type": "Urbana",
             "vehicle_img": "",
             "status": true,
-            "color": "#ed1c24",
+            "color": "#931200",
             "terminal_1": 70172,
             "terminal_2": 91511,
             "Going": [
