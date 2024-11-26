@@ -11,12 +11,12 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware para habilitar CORS
+// CORS Middleware
 app.use(
   cors({
-    origin: "*", // Permitir cualquier origen (ajustar en producción)
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Métodos HTTP permitidos
-    allowedHeaders: ["Content-Type", "Authorization"], // Cabeceras permitidas
+    origin: "*", // Permitir cualquier origen
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
@@ -193,17 +193,6 @@ app.get("/api/comments/routes/:routeId", (req, res) => {
   res.send(filteredComments);
 });
 
-app.post("/api/comments/routes", (req, res) => {
-  const data = readData();
-  const newComment = req.body;
-  data.comments[0].routes.push({
-    id: data.comments[0].routes.length + 1, // Genera un ID simple
-    ...newComment,
-  });
-  withData(data);
-  res.json(newComment);
-});
-
 app.get("/api/comments/places/:placeId", (req, res) => {
   const data = readData();
   const allRouteComments = data.comments.flatMap(
@@ -219,15 +208,50 @@ app.get("/api/comments/places/:placeId", (req, res) => {
   res.send(filteredComments);
 });
 
+// POST para rutas
+app.post("/api/comments/routes", (req, res) => {
+  const data = readData();
+  const newComment = req.body;
+
+  if (!newComment.route_id || !newComment.message || !newComment.user_name) {
+    return res.status(400).json({ error: "Faltan campos requeridos." });
+  }
+
+  if (!data.comments[0].routes) {
+    data.comments[0].routes = [];
+  }
+
+  const commentWithId = {
+    id: data.comments[0].routes.length + 1, // Generar un ID
+    ...newComment,
+  };
+  data.comments[0].routes.push(commentWithId);
+
+  withData(data);
+  res.json(commentWithId);
+});
+
+// POST para lugares
 app.post("/api/comments/places", (req, res) => {
   const data = readData();
   const newComment = req.body;
-  data.comments[0].places.push({
+
+  if (!newComment.place_id || !newComment.message || !newComment.user_name) {
+    return res.status(400).json({ error: "Faltan campos requeridos." });
+  }
+
+  if (!data.comments[0].places) {
+    data.comments[0].places = [];
+  }
+
+  const commentWithId = {
     id: data.comments[0].places.length + 1,
     ...newComment,
-  });
+  };
+  data.comments[0].places.push(commentWithId);
+
   withData(data);
-  res.json(newComment);
+  res.json(commentWithId);
 });
 
 app.listen(PORT, () => {
