@@ -3147,38 +3147,8 @@
   ],
   "comments": [
     {
-      "routes": [
-        {
-          "id": 1,
-          "route_id": 1,
-          "user_name": "hola",
-          "message": "test",
-          "date": "10/05/2024"
-        },
-        {
-          "id": 2,
-          "route_id": 3,
-          "user_name": "hola",
-          "message": "test",
-          "date": "10/05/2024"
-        },
-        {
-          "id": 3,
-          "route_id": 2,
-          "user_name": "hola",
-          "message": "test",
-          "date": "10/05/2024"
-        }
-      ],
-      "places": [
-        {
-          "id": 1,
-          "place_id": 1,
-          "user_name": "hola",
-          "message": "test",
-          "date": "10/05/2024"
-        }
-      ]
+      "routes": [],
+      "places": []
     }
   ]
 }
