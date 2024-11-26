@@ -25,7 +25,7 @@ app.use(express.json());
 
 const readData = () => {
   try {
-    const data = fs.readFileSync("./db.js");
+    const data = fs.readFileSync("./db.json");
     return JSON.parse(data);
   } catch (error) {
     console.log(error);
@@ -34,7 +34,7 @@ const readData = () => {
 
 const withData = (data) => {
   try {
-    fs.withFileSync("./db.js", JSON.stringify(data));
+    fs.writeFileSync("./db.json", JSON.stringify(data));
   } catch (error) {
     console.log(error);
   }
@@ -176,6 +176,58 @@ app.get("/api/route/:routeId/return/:returnId/stop/:stopId", (req, res) => {
   if (!stop) return res.status(404).send("Stop not found");
 
   res.send(stop);
+});
+
+app.get("/api/comments/routes/:routeId", (req, res) => {
+  const data = readData();
+  const allRouteComments = data.comments.flatMap(
+    (comment) => comment.routes || []
+  );
+  const filteredComments = allRouteComments.filter(
+    (comment) => comment.route_id === parseInt(req.params.routeId)
+  );
+
+  if (!filteredComments)
+    return res.status(404).send("Route comments not found");
+
+  res.send(filteredComments);
+});
+
+app.post("/api/comments/routes", (req, res) => {
+  const data = readData();
+  const newComment = req.body;
+  data.comments[0].routes.push({
+    id: data.comments[0].routes.length + 1, // Genera un ID simple
+    ...newComment,
+  });
+  withData(data);
+  res.json(newComment);
+});
+
+app.get("/api/comments/places/:placeId", (req, res) => {
+  const data = readData();
+  const allRouteComments = data.comments.flatMap(
+    (comment) => comment.places || []
+  );
+  const filteredComments = allRouteComments.filter(
+    (comment) => comment.place_id === parseInt(req.params.placeId)
+  );
+
+  if (!filteredComments)
+    return res.status(404).send("Place comments not found");
+
+  res.send(filteredComments);
+});
+
+app.post("/api/comments/places", (req, res) => {
+  const data = readData();
+  const newComment = req.body;
+  data.comments[0].places.push({
+    id: data.comments[0].places.length + 1,
+    ...newComment,
+  });
+  withData(data);
+  res.json(newComment);
 });
 
 app.listen(PORT, () => {
