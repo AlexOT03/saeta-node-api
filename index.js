@@ -213,14 +213,6 @@ app.post("/api/comments/routes", (req, res) => {
   const data = readData();
   const newComment = req.body;
 
-  if (!newComment.route_id || !newComment.message || !newComment.user_name) {
-    return res.status(400).json({ error: "Faltan campos requeridos." });
-  }
-
-  if (!data.comments[0].routes) {
-    data.comments[0].routes = [];
-  }
-
   const commentWithId = {
     id: data.comments[0].routes.length + 1, // Generar un ID
     ...newComment,
@@ -235,14 +227,6 @@ app.post("/api/comments/routes", (req, res) => {
 app.post("/api/comments/places", (req, res) => {
   const data = readData();
   const newComment = req.body;
-
-  if (!newComment.place_id || !newComment.message || !newComment.user_name) {
-    return res.status(400).json({ error: "Faltan campos requeridos." });
-  }
-
-  if (!data.comments[0].places) {
-    data.comments[0].places = [];
-  }
 
   const commentWithId = {
     id: data.comments[0].places.length + 1,
